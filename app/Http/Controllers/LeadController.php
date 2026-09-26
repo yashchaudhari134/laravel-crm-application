@@ -4,28 +4,66 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use Illuminate\Http\Request;
+use App\Models\LeadSource;
+use App\Models\User;
 
 class LeadController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-public function index()
+public function index(Request $request)
 {
-    $leads = Lead::with(['leadSource', 'assignedSalesperson'])
-                 ->latest()
-                 ->get();
+    $query = Lead::with(['leadSource', 'assignedSalesperson']);
 
-    return view('leads.index', compact('leads'));
+    // Search by lead name, company name or phone
+    if ($request->search) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('lead_name', 'like', "%$search%")
+              ->orWhere('company_name', 'like', "%$search%")
+              ->orWhere('phone', 'like', "%$search%");
+        });
+    }
+
+    // Filter by status
+    if ($request->status) {
+        $query->where('status', $request->status);
+    }
+
+    // Filter by lead source
+    if ($request->lead_source_id) {
+        $query->where('lead_source_id', $request->lead_source_id);
+    }
+
+    // Filter by assigned salesperson
+    if ($request->assigned_salesperson_id) {
+        $query->where('assigned_salesperson_id', $request->assigned_salesperson_id);
+    }
+
+    $leads = $query->latest()->get();
+
+    $leadSources = LeadSource::all();
+    $salespeople = User::all();
+
+    return view('leads.index', compact(
+        'leads',
+        'leadSources',
+        'salespeople'
+    ));
 }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
-    }
+{
+    $leadSources = LeadSource::all();
+    $salespeople = User::all();
+
+    return view('leads.create', compact('leadSources', 'salespeople'));
+}
 
     /**
      * Store a newly created resource in storage.
@@ -55,23 +93,26 @@ public function index()
     /**
      * Display the specified resource.
      */
-    public function show(Lead $lead)
-    {
-        $lead->load([
-            'leadSource',
-            'assignedSalesperson',
-            'followUps'
-        ]);
+   public function show(Lead $lead)
+{
+    $lead->load([
+        'leadSource',
+        'assignedSalesperson',
+        'followUps'
+    ]);
 
-        return response()->json($lead);
-    }
+    return view('leads.show', compact('lead'));
+}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Lead $lead)
     {
-        //
+        $leadSources = LeadSource::all();
+        $salespeople = User::all();
+
+        return view('leads.edit',compact('lead','leadSources','salespeople'));
     }
 
     /**
@@ -94,10 +135,9 @@ public function index()
 
     $lead->update($validated);
 
-    return response()->json([
-        'message' => 'Lead updated Successfully',
-        'lead' => $lead
-    ]);
+  return redirect()
+    ->route('leads.index')
+    ->with('success', 'Lead updated successfully.');
     }
 
     /**
@@ -107,8 +147,8 @@ public function index()
 {
     $lead->delete();
 
-    return response()->json([
-        'message' => 'Lead deleted successfully.'
-    ]);
+   return redirect()
+    ->route('leads.index')
+    ->with('success', 'Lead deleted successfully.');
 }
 }

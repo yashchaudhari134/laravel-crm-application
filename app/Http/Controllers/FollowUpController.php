@@ -11,22 +11,37 @@ class FollowUpController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $followUps = FollowUp::with('lead')
-                               ->latest()
-                               ->get();
+  
+   public function index()
+{
+    $today = now()->toDateString();
 
-        return response()->json($followUps);
-    }
+    $upcomingFollowUps = FollowUp::with('lead')
+        ->where('follow_up_date', '>=', $today)
+        ->orderBy('follow_up_date')
+        ->get();
+
+    $overdueFollowUps = FollowUp::with('lead')
+        ->where('follow_up_date', '<', $today)
+        ->orderBy('follow_up_date')
+        ->get();
+
+    return view('follow-ups.index', compact(
+        'upcomingFollowUps',
+        'overdueFollowUps'
+    ));
+}
+  
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        
-    }
+{
+    $leads = Lead::all();
+
+    return view('follow-ups.create', compact('leads'));
+}
 
     /**
      * Store a newly created resource in storage.
@@ -43,10 +58,9 @@ class FollowUpController extends Controller
 
         $followUp = FollowUp::create($validated);
 
-        return response()->json([
-            'message' => 'FollowUp created Successfully.',
-            'follow_up' =>$followUp
-        ]);
+        return redirect()
+            ->route('follow-ups.index')
+            ->with('sucess','Follow-up added Successfully.');
     }
 
     /**
@@ -62,10 +76,12 @@ class FollowUpController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        
-    }
+   public function edit(FollowUp $followUp)
+{
+    $leads = Lead::all();
+
+    return view('follow-ups.edit', compact('followUp', 'leads'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -80,10 +96,9 @@ class FollowUpController extends Controller
 
         $followUp->update($validated);
 
-        return response()->json([
-            'message' => "FollowUp updated Successfully",
-            'follow_up' => $followUp,
-        ]);
+      return redirect()
+    ->route('follow-ups.index')
+    ->with('success', 'Follow-up updated successfully.');
 
     }
 
@@ -94,9 +109,9 @@ class FollowUpController extends Controller
     {
         $followUp->delete();
 
-        return response()->json([
-            'message' => 'FollowUp updated Successfully',
-        ]);
+       return redirect()
+            ->route('follow-ups.index')
+            ->with('success','Follow-up deleted Successfully');
     }
 
     public function upcoming(){
