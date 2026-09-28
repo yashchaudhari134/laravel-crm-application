@@ -1,58 +1,469 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CRM Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based Customer Relationship Management (CRM) application built using Laravel and MySQL. The application helps manage leads, sales follow-ups, and basic user authentication through a simple and structured interface.
 
-## About Laravel
+## 📌 Project Overview
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The CRM application is designed to manage customer leads throughout the sales process. It provides functionality to create, view, update, and delete leads, track follow-ups, search and filter leads, and manage user authentication.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The project focuses on practical implementation of:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Laravel MVC architecture
+* CRUD operations
+* MySQL database management
+* Eloquent ORM and relationships
+* Form validation
+* Authentication and authorization
+* Search and filtering
+* Follow-up management
+* Blade templating
+* Tailwind CSS
 
-## Learning Laravel
+## ✨ Features
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🔐 Authentication
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* User registration
+* User login
+* User logout
+* Protected application routes
+* Profile information management
+* Password update
+* Account deletion option
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 👥 Lead Management
 
-## Agentic Development
+Users can:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+* Add new leads
+* View all leads
+* View individual lead details
+* Edit lead information
+* Delete leads
 
-```bash
-composer require laravel/boost --dev
+Each lead contains:
 
-php artisan boost:install
+* Lead Name
+* Company Name
+* Email
+* Phone Number
+* Lead Source
+* Status
+* Assigned Salesperson
+* Expected Deal Value
+* Follow-up Date
+* Notes
+* Created Date
+
+### 📊 Lead Status
+
+The application supports the following lead statuses:
+
+* New
+* Contacted
+* Follow-up
+* Qualified
+* Proposal Sent
+* Won
+* Lost
+
+### 🔎 Search & Filtering
+
+Leads can be searched using:
+
+* Lead Name
+* Company Name
+* Phone Number
+
+Leads can also be filtered by:
+
+* Status
+* Lead Source
+* Assigned Salesperson
+
+Multiple search and filter conditions can be used together.
+
+### 📅 Follow-up Management
+
+Users can:
+
+* Add follow-ups for leads
+* View upcoming follow-ups
+* View overdue follow-ups
+* Edit follow-up information
+* Delete follow-ups
+* Add follow-up notes
+* Update follow-up dates
+
+The application automatically separates follow-ups into **Upcoming** and **Overdue** based on the current date.
+
+### ✅ Validation
+
+The application includes server-side form validation for:
+
+* Required fields
+* Email format
+* Numeric deal value
+* Valid dates
+* Existing database records
+* Allowed lead statuses
+
+Validation errors are displayed to the user through the application interface.
+
+## 🛠️ Technologies Used
+
+| Technology     | Purpose                    |
+| -------------- | -------------------------- |
+| PHP            | Backend programming        |
+| Laravel        | Web application framework  |
+| MySQL          | Database                   |
+| Blade          | Server-side templating     |
+| Tailwind CSS   | UI styling                 |
+| Vite           | Frontend asset development |
+| Laravel Breeze | Authentication             |
+| Eloquent ORM   | Database interaction       |
+| Git & GitHub   | Version control            |
+
+## 🏗️ Application Architecture
+
+The application follows the Laravel MVC architecture.
+
+```text
+User
+  ↓
+Browser
+  ↓
+Laravel Route
+  ↓
+Controller
+  ↓
+Model / Eloquent ORM
+  ↓
+MySQL Database
+  ↓
+Model / Eloquent ORM
+  ↓
+Controller
+  ↓
+Blade View
+  ↓
+Browser
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Main Components
 
-## Contributing
+**Routes**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Define application URLs and connect requests to controllers.
 
-## Code of Conduct
+**Controllers**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Handle application logic and process user requests.
 
-## Security Vulnerabilities
+**Models**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Represent database tables and manage database relationships using Eloquent ORM.
 
-## License
+**Blade Views**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Display application pages and user interface components.
+
+**MySQL**
+
+Stores users, leads, lead sources, and follow-up information.
+
+## 🗄️ Database Relationships
+
+The application uses Eloquent relationships between its main models.
+
+### Lead
+
+A Lead:
+
+* Belongs to a Lead Source
+* Belongs to an assigned Salesperson/User
+* Has many Follow-ups
+
+### Lead Source
+
+A Lead Source:
+
+* Has many Leads
+
+### User
+
+A User:
+
+* Can be assigned many Leads
+* Can create many Follow-ups
+
+### Follow-up
+
+A Follow-up:
+
+* Belongs to a Lead
+* Belongs to the User who created it
+
+## 📁 Project Structure
+
+Important Laravel directories:
+
+```text
+crm/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   └── Models/
+│
+├── database/
+│   ├── migrations/
+│   └── seeders/
+│
+├── resources/
+│   ├── css/
+│   ├── js/
+│   └── views/
+│
+├── routes/
+│   └── web.php
+│
+├── public/
+├── storage/
+├── tests/
+├── .env.example
+├── artisan
+├── composer.json
+├── package.json
+└── vite.config.js
+```
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-github-repository-url>
+```
+
+### 2. Navigate to the Project
+
+```bash
+cd crm
+```
+
+### 3. Install PHP Dependencies
+
+```bash
+composer install
+```
+
+### 4. Install Frontend Dependencies
+
+```bash
+npm install
+```
+
+### 5. Create Environment File
+
+Copy `.env.example` and create a `.env` file.
+
+```bash
+cp .env.example .env
+```
+
+On Windows, you can also manually copy `.env.example` and rename the copy to:
+
+```text
+.env
+```
+
+### 6. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### 7. Configure Database
+
+Create a MySQL database, for example:
+
+```text
+crm_db
+```
+
+Then configure the database details in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=crm_db
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### 8. Run Database Migrations
+
+```bash
+php artisan migrate
+```
+
+### 9. Start Laravel Development Server
+
+```bash
+php artisan serve
+```
+
+The application will be available at:
+
+```text
+http://localhost:8000
+```
+
+### 10. Start Vite
+
+In another terminal:
+
+```bash
+npm run dev
+```
+
+## 🧪 Testing
+
+The following application functionality has been manually tested:
+
+### Authentication
+
+* User registration
+* Valid login
+* Invalid login
+* Empty login validation
+* Logout
+* Protected routes
+* Dashboard access protection
+* Leads access protection
+* Follow-ups access protection
+
+### Lead Management
+
+* Lead creation
+* Required field validation
+* Invalid email validation
+* Invalid deal value validation
+* Invalid date validation
+* Lead viewing
+* Lead editing
+* Lead deletion
+* Search by lead name
+* Search by company name
+* Search by phone
+* Status filtering
+* Lead source filtering
+* Salesperson filtering
+* Combined search and filtering
+* Clear filters
+
+### Follow-up Management
+
+* Follow-up creation
+* Required field validation
+* Upcoming follow-up classification
+* Overdue follow-up classification
+* Follow-up editing
+* Follow-up date update
+* Dynamic upcoming/overdue classification
+* Follow-up deletion
+
+### Profile
+
+* Profile information update
+* Password update
+
+## 🔒 Security
+
+The application includes:
+
+* Laravel authentication
+* Protected routes using authentication middleware
+* CSRF protection
+* Server-side validation
+* Password hashing
+* Database existence validation
+* Environment configuration using `.env`
+
+Sensitive environment information such as database credentials is not included in the repository.
+
+## 📸 Screenshots
+
+Screenshots demonstrating the main application features can be added here.
+
+Suggested screenshots:
+
+* Login page
+* Dashboard
+* Leads page
+* Add Lead page
+* View Lead page
+* Edit Lead page
+* Follow-ups page
+* Add Follow-up page
+* Profile page
+
+Example:
+
+```text
+screenshots/
+├── login.png
+├── dashboard.png
+├── leads.png
+├── add-lead.png
+├── view-lead.png
+├── edit-lead.png
+├── follow-ups.png
+└── profile.png
+```
+
+## 🎯 Learning Outcomes
+
+This project provided practical experience with:
+
+* Laravel MVC architecture
+* PHP backend development
+* MySQL database design
+* CRUD operations
+* Eloquent ORM
+* Model relationships
+* Form validation
+* Authentication
+* Middleware
+* Search and filtering
+* Business logic implementation
+* Blade templates
+* Tailwind CSS
+* Git and GitHub
+
+## 🔮 Future Improvements
+
+Possible future improvements include:
+
+* Role-based access control
+* Pagination for large lead datasets
+* Lead activity history
+* Sales pipeline dashboard
+* Export leads to CSV/Excel
+* Email notifications for follow-ups
+* Advanced reporting and analytics
+
+## 👨‍💻 Author
+
+**Yash Chaudhari**
+
+Computer Engineering Graduate
+
+GitHub: 
+
+LinkedIn: 
+
+## 📄 License
+
+This project is developed for learning and internship assignment purposes.
